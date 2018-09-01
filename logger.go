@@ -100,3 +100,23 @@ func Create(filename string, dev, force bool) *logrus.Logger {
 
 	return logger
 }
+
+// LevelLog provides an interface for logging with specific format
+func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
+	switch level {
+	case logrus.DebugLevel:
+		entry.Debugln(msg)
+	case logrus.InfoLevel:
+		entry.Infoln(msg)
+	case logrus.WarnLevel:
+		entry.Warnln(msg)
+	case logrus.ErrorLevel:
+		entry.Errorln(msg)
+	case logrus.FatalLevel:
+		entry.Fatalln(msg)
+	case logrus.PanicLevel:
+		entry.Panicln(msg)
+	default:
+		entry.Debugln(msg)
+	}
+}
