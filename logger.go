@@ -37,7 +37,7 @@ func Create(filename string, dev, force bool) *logrus.Logger {
 	logger.SetOutput(colorable.NewColorableStdout())
 
 	// Formatter for file logging.
-	fileFormatter := &prefixed.TextFormatter{FullTimestamp: true, ForceFormatting: true, SpacePadding: 64}
+	fileFormatter := &prefixed.TextFormatter{FullTimestamp: true, ForceFormatting: true, DisableColors: true, SpacePadding: 64}
 
 	// Add file hook.
 	logger.Hooks.Add(lfshook.NewHook(
