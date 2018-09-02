@@ -14,8 +14,8 @@ import (
 
 var logger *logrus.Logger
 
-// Create a new logger.
-func Create(filename string, dev, force bool) *logrus.Logger {
+// New create a new logger.
+func New(filename string, dev, force bool) *logrus.Logger {
 	// If Logger had been created and not force create, return the original Logger
 	if logger != nil && !force {
 		return logger
