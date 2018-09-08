@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"path"
+	"path/filepath"
 	"runtime"
 
 	colorable "github.com/mattn/go-colorable"
@@ -150,7 +150,7 @@ func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
 func DebugInfo(fidles logrus.Fields) (debugInfo logrus.Fields) {
 	if pc, file, line, ok := runtime.Caller(1); ok {
 		debugInfo = logrus.Fields{
-			"file_name":   path.Base(file),
+			"file_name":   filepath.Base(file),
 			"line_number": line,
 		}
 		if funcInfo := runtime.FuncForPC(pc); funcInfo != nil {
