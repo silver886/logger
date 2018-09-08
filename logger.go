@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"runtime"
 
 	colorable "github.com/mattn/go-colorable"
@@ -13,17 +14,17 @@ import (
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
-var logger *logrus.Logger
+var loggers = map[string]*logrus.Logger{}
 
 // New create a new logger.
-func New(filename string, dev, force bool) *logrus.Logger {
-	// If Logger had been created and not force create, return the original Logger
-	if logger != nil && !force {
-		return logger
+func New(name string, dev bool) (logger *logrus.Logger) {
+	// If Logger had been created, return nil
+	if loggers[name] != nil {
+		return
 	}
 
 	// Create log file in temp folder.
-	logFile, err := ioutil.TempFile("", filename+".*.log")
+	logFile, err := ioutil.TempFile("", name+".*.log")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -99,7 +100,16 @@ func New(filename string, dev, force bool) *logrus.Logger {
 		))
 	}
 
-	return logger
+	// Store logger
+	loggers[name] = logger
+
+	return
+}
+
+// Get find the logger from storage
+func Get(name string) (logger *logrus.Logger) {
+	logger = loggers[name]
+	return
 }
 
 // LevelLog provides an interface for logging with specific format
@@ -126,13 +136,12 @@ func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
 func DebugInfo(fidles logrus.Fields) (debugInfo logrus.Fields) {
 	if pc, file, line, ok := runtime.Caller(1); ok {
 		debugInfo = logrus.Fields{
-			"path_name":   file,
+			"file_name":   path.Base(file),
 			"line_number": line,
 		}
 		if funcInfo := runtime.FuncForPC(pc); funcInfo != nil {
 			debugInfo["function_name"] = funcInfo.Name()
 		}
-
 	}
 
 	for key, value := range fidles {
