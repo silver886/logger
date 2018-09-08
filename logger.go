@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"runtime"
 
 	colorable "github.com/mattn/go-colorable"
 	"github.com/rifflock/lfshook"
@@ -119,4 +120,24 @@ func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
 	default:
 		entry.Debugln(msg)
 	}
+}
+
+// DebugInfo combain user fidles with debug information
+func DebugInfo(fidles logrus.Fields) (debugInfo logrus.Fields) {
+	if pc, file, line, ok := runtime.Caller(1); ok {
+		debugInfo = logrus.Fields{
+			"path_name":   file,
+			"line_number": line,
+		}
+		if funcInfo := runtime.FuncForPC(pc); funcInfo != nil {
+			debugInfo["function_name"] = funcInfo.Name()
+		}
+
+	}
+
+	for key, value := range fidles {
+		debugInfo[key] = value
+	}
+
+	return
 }
