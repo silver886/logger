@@ -112,6 +112,20 @@ func Get(name string) (logger *logrus.Logger) {
 	return
 }
 
+// List shows created loggers
+func List() (keys []string) {
+	for k := range loggers {
+		keys = append(keys, k)
+	}
+	return
+}
+
+// Has returns true if the logger created before
+func Has(name string) (ok bool) {
+	_, ok = loggers[name]
+	return
+}
+
 // LevelLog provides an interface for logging with specific format
 func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
 	switch level {
