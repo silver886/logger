@@ -14,10 +14,16 @@ import (
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
-var loggers = map[string]*logrus.Logger{}
+// Logger add some attributes on logrus.Logger
+type Logger struct {
+	*logrus.Logger
+	Path string
+}
+
+var loggers = map[string]*Logger{}
 
 // New create a new logger.
-func New(name string, dev bool) (logger *logrus.Logger) {
+func New(name string, dev bool) (logger *Logger) {
 	// If Logger had been created, return nil
 	if loggers[name] != nil {
 		return
@@ -31,7 +37,10 @@ func New(name string, dev bool) (logger *logrus.Logger) {
 	logFileName := logFile.Name()
 
 	// Create logger.
-	logger = logrus.New()
+	logger = &Logger{
+		Logger: logrus.New(),
+		Path:   logFileName,
+	}
 	logger.SetLevel(logrus.DebugLevel)
 
 	// Enable color logging in Windows console.
@@ -107,7 +116,7 @@ func New(name string, dev bool) (logger *logrus.Logger) {
 }
 
 // Get find the logger from storage
-func Get(name string) (logger *logrus.Logger) {
+func Get(name string) (logger *Logger) {
 	logger = loggers[name]
 	return
 }
