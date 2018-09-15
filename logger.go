@@ -156,8 +156,9 @@ func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
 }
 
 // DebugInfo combain user fidles with debug information
-func DebugInfo(fidles logrus.Fields) (debugInfo logrus.Fields) {
-	if pc, file, line, ok := runtime.Caller(1); ok {
+func DebugInfo(skip int, fidles logrus.Fields) (debugInfo logrus.Fields) {
+	skip++
+	if pc, file, line, ok := runtime.Caller(skip); ok {
 		debugInfo = logrus.Fields{
 			"file_name":   filepath.Base(file),
 			"line_number": line,
