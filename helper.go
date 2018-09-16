@@ -32,11 +32,11 @@ func DebugInfo(skip int, fidles logrus.Fields) (debugInfo logrus.Fields) {
 	skip++
 	if pc, file, line, ok := runtime.Caller(skip); ok {
 		debugInfo = logrus.Fields{
-			"file_name":   filepath.Base(file),
-			"line_number": line,
+			"_go_runtime_file_name":   filepath.Base(file),
+			"_go_runtime_line_number": line,
 		}
 		if funcInfo := runtime.FuncForPC(pc); funcInfo != nil {
-			debugInfo["function_name"] = funcInfo.Name()
+			debugInfo["_go_runtime_function_name"] = funcInfo.Name()
 		}
 	}
 
