@@ -67,168 +67,168 @@ func (entry *Entry) WithTime(t time.Time) *Entry {
 func (logger *Logger) Debugf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Debugf(format, args...)
+		logger.Logger.WithTime(time.Now()).Debugf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Infof(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Infof(format, args...)
+		logger.Logger.WithTime(time.Now()).Infof(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Printf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Printf(format, args...)
+		logger.Logger.WithTime(time.Now()).Printf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Warnf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warnf(format, args...)
+		logger.Logger.WithTime(time.Now()).Warnf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Warningf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warningf(format, args...)
+		logger.Logger.WithTime(time.Now()).Warningf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Errorf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Errorf(format, args...)
+		logger.Logger.WithTime(time.Now()).Errorf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Fatalf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Fatalf(format, args...)
+		logger.Logger.WithTime(time.Now()).Fatalf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Panicf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Panicf(format, args...)
+		logger.Logger.WithTime(time.Now()).Panicf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Debug(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Debug(args...)
+		logger.Logger.WithTime(time.Now()).Debug(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Info(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Info(args...)
+		logger.Logger.WithTime(time.Now()).Info(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Print(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Print(args...)
+		logger.Logger.WithTime(time.Now()).Print(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Warn(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warn(args...)
+		logger.Logger.WithTime(time.Now()).Warn(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Warning(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warning(args...)
+		logger.Logger.WithTime(time.Now()).Warning(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Error(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Error(args...)
+		logger.Logger.WithTime(time.Now()).Error(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Fatal(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Fatal(args...)
+		logger.Logger.WithTime(time.Now()).Fatal(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Panic(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Panic(args...)
+		logger.Logger.WithTime(time.Now()).Panic(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Debugln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Debugln(args...)
+		logger.Logger.WithTime(time.Now()).Debugln(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Infoln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Infoln(args...)
+		logger.Logger.WithTime(time.Now()).Infoln(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Println(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Println(args...)
+		logger.Logger.WithTime(time.Now()).Println(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Warnln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warnln(args...)
+		logger.Logger.WithTime(time.Now()).Warnln(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Warningln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warningln(args...)
+		logger.Logger.WithTime(time.Now()).Warningln(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Errorln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Errorln(args...)
+		logger.Logger.WithTime(time.Now()).Errorln(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Fatalln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Fatalln(args...)
+		logger.Logger.WithTime(time.Now()).Fatalln(args...)
 		waitGroup.Done()
 	}()
 }
 func (logger *Logger) Panicln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		logger.Logger.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Panicln(args...)
+		logger.Logger.WithTime(time.Now()).Panicln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -236,168 +236,240 @@ func (logger *Logger) Panicln(args ...interface{}) {
 func (entry *Entry) Debug(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Debug(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Debug(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Print(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Print(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Print(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Info(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Info(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Info(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Warn(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warn(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Warn(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Warning(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warning(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Warning(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Error(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Error(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Error(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Fatal(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Fatal(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Fatal(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Panic(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Panic(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Panic(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Debugf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Debugf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Debugf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Infof(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Infof(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Infof(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Printf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Printf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Printf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Warnf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warnf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Warnf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Warningf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warningf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Warningf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Errorf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Errorf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Errorf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Fatalf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Fatalf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Fatalf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Panicf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Panicf(format, args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Panicf(format, args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Debugln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Debugln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Debugln(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Infoln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Infoln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Infoln(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Println(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Println(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Println(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Warnln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warnln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Warnln(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Warningln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Warningln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Warningln(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Errorln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Errorln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Errorln(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Fatalln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Fatalln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Fatalln(args...)
 		waitGroup.Done()
 	}()
 }
 func (entry *Entry) Panicln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
-		entry.Entry.WithField("_commit_time", time.Now().Format(time.RFC3339Nano)).Panicln(args...)
+		if entry.Time.IsZero() {
+			entry.Time = time.Now()
+		}
+		entry.Entry.Panicln(args...)
 		waitGroup.Done()
 	}()
 }
