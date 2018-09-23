@@ -237,9 +237,10 @@ func (entry *Entry) Debug(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Debug(args...)
+		} else {
+			entry.Entry.Debug(args...)
 		}
-		entry.Entry.Debug(args...)
 		waitGroup.Done()
 	}()
 }
@@ -247,9 +248,10 @@ func (entry *Entry) Print(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Print(args...)
+		} else {
+			entry.Entry.Print(args...)
 		}
-		entry.Entry.Print(args...)
 		waitGroup.Done()
 	}()
 }
@@ -257,9 +259,10 @@ func (entry *Entry) Info(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Info(args...)
+		} else {
+			entry.Entry.Info(args...)
 		}
-		entry.Entry.Info(args...)
 		waitGroup.Done()
 	}()
 }
@@ -267,9 +270,10 @@ func (entry *Entry) Warn(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Warn(args...)
+		} else {
+			entry.Entry.Warn(args...)
 		}
-		entry.Entry.Warn(args...)
 		waitGroup.Done()
 	}()
 }
@@ -277,9 +281,10 @@ func (entry *Entry) Warning(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Warning(args...)
+		} else {
+			entry.Entry.Warning(args...)
 		}
-		entry.Entry.Warning(args...)
 		waitGroup.Done()
 	}()
 }
@@ -287,9 +292,10 @@ func (entry *Entry) Error(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Error(args...)
+		} else {
+			entry.Entry.Error(args...)
 		}
-		entry.Entry.Error(args...)
 		waitGroup.Done()
 	}()
 }
@@ -297,9 +303,10 @@ func (entry *Entry) Fatal(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Fatal(args...)
+		} else {
+			entry.Entry.Fatal(args...)
 		}
-		entry.Entry.Fatal(args...)
 		waitGroup.Done()
 	}()
 }
@@ -307,9 +314,10 @@ func (entry *Entry) Panic(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Panic(args...)
+		} else {
+			entry.Entry.Panic(args...)
 		}
-		entry.Entry.Panic(args...)
 		waitGroup.Done()
 	}()
 }
@@ -317,9 +325,10 @@ func (entry *Entry) Debugf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Debugf(format, args...)
+		} else {
+			entry.Entry.Debugf(format, args...)
 		}
-		entry.Entry.Debugf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -327,9 +336,10 @@ func (entry *Entry) Infof(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Infof(format, args...)
+		} else {
+			entry.Entry.Infof(format, args...)
 		}
-		entry.Entry.Infof(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -337,9 +347,10 @@ func (entry *Entry) Printf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Printf(format, args...)
+		} else {
+			entry.Entry.Printf(format, args...)
 		}
-		entry.Entry.Printf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -347,9 +358,10 @@ func (entry *Entry) Warnf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Warnf(format, args...)
+		} else {
+			entry.Entry.Warnf(format, args...)
 		}
-		entry.Entry.Warnf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -357,9 +369,10 @@ func (entry *Entry) Warningf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Warningf(format, args...)
+		} else {
+			entry.Entry.Warningf(format, args...)
 		}
-		entry.Entry.Warningf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -367,9 +380,10 @@ func (entry *Entry) Errorf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Errorf(format, args...)
+		} else {
+			entry.Entry.Errorf(format, args...)
 		}
-		entry.Entry.Errorf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -377,9 +391,10 @@ func (entry *Entry) Fatalf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Fatalf(format, args...)
+		} else {
+			entry.Entry.Fatalf(format, args...)
 		}
-		entry.Entry.Fatalf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -387,9 +402,10 @@ func (entry *Entry) Panicf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Panicf(format, args...)
+		} else {
+			entry.Entry.Panicf(format, args...)
 		}
-		entry.Entry.Panicf(format, args...)
 		waitGroup.Done()
 	}()
 }
@@ -397,9 +413,10 @@ func (entry *Entry) Debugln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Debugln(args...)
+		} else {
+			entry.Entry.Debugln(args...)
 		}
-		entry.Entry.Debugln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -407,9 +424,10 @@ func (entry *Entry) Infoln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Infoln(args...)
+		} else {
+			entry.Entry.Infoln(args...)
 		}
-		entry.Entry.Infoln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -417,9 +435,10 @@ func (entry *Entry) Println(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Println(args...)
+		} else {
+			entry.Entry.Println(args...)
 		}
-		entry.Entry.Println(args...)
 		waitGroup.Done()
 	}()
 }
@@ -427,9 +446,10 @@ func (entry *Entry) Warnln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Warnln(args...)
+		} else {
+			entry.Entry.Warnln(args...)
 		}
-		entry.Entry.Warnln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -437,9 +457,10 @@ func (entry *Entry) Warningln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Warningln(args...)
+		} else {
+			entry.Entry.Warningln(args...)
 		}
-		entry.Entry.Warningln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -447,9 +468,10 @@ func (entry *Entry) Errorln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Errorln(args...)
+		} else {
+			entry.Entry.Errorln(args...)
 		}
-		entry.Entry.Errorln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -457,9 +479,10 @@ func (entry *Entry) Fatalln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Fatalln(args...)
+		} else {
+			entry.Entry.Fatalln(args...)
 		}
-		entry.Entry.Fatalln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -467,9 +490,10 @@ func (entry *Entry) Panicln(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
-			entry.Time = time.Now()
+			entry.Entry.WithTime(time.Now()).Panicln(args...)
+		} else {
+			entry.Entry.Panicln(args...)
 		}
-		entry.Entry.Panicln(args...)
 		waitGroup.Done()
 	}()
 }
