@@ -20,7 +20,7 @@ type Logger struct {
 var loggers = map[string]*Logger{}
 
 // New create a new logger.
-func New(name string, dev bool) (logger *Logger) {
+func New(name string, level []logrus.Level, dev bool) (logger *Logger) {
 	// If Logger had been created, return nil
 	if loggers[name] != nil {
 		return
@@ -48,17 +48,14 @@ func New(name string, dev bool) (logger *Logger) {
 	fileFormatter := &prefixed.TextFormatter{FullTimestamp: true, ForceFormatting: true, DisableColors: true, SpacePadding: 64}
 
 	// Add file hook.
-	logger.Hooks.Add(lfshook.NewHook(
-		lfshook.PathMap{
-			logrus.DebugLevel: logFileName,
-			logrus.InfoLevel:  logFileName,
-			logrus.WarnLevel:  logFileName,
-			logrus.ErrorLevel: logFileName,
-			logrus.FatalLevel: logFileName,
-			logrus.PanicLevel: logFileName,
-		},
-		fileFormatter,
-	))
+	for _, val := range level {
+		logger.Hooks.Add(lfshook.NewHook(
+			lfshook.PathMap{
+				val: logFileName,
+			},
+			fileFormatter,
+		))
+	}
 
 	// Enable developing logging.
 	if dev {
