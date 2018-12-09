@@ -40,7 +40,7 @@ func New(name string, level []logrus.Level, dev bool) (logger *Logger) {
 		Logger: logrus.New(),
 		Path:   logFileName,
 	}
-	logger.SetLevel(logrus.DebugLevel)
+	logger.SetLevel(logrus.TraceLevel)
 
 	// Enable color logging in Windows console.
 	logger.Formatter = &logrus.TextFormatter{ForceColors: true}
