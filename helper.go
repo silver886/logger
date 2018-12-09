@@ -10,6 +10,8 @@ import (
 // LevelLog provides an interface for logging with specific format
 func LevelLog(entry *logrus.Entry, level logrus.Level, msg string) {
 	switch level {
+	case logrus.TraceLevel:
+		entry.Traceln(msg)
 	case logrus.DebugLevel:
 		entry.Debugln(msg)
 	case logrus.InfoLevel:

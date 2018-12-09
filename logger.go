@@ -67,6 +67,7 @@ func New(name string, level []logrus.Level, dev bool) (logger *Logger) {
 		// Full log file.
 		logger.Hooks.Add(lfshook.NewHook(
 			lfshook.PathMap{
+				logrus.TraceLevel: "dev_full.log",
 				logrus.DebugLevel: "dev_full.log",
 				logrus.InfoLevel:  "dev_full.log",
 				logrus.WarnLevel:  "dev_full.log",

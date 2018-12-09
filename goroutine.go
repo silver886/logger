@@ -64,6 +64,13 @@ func (entry *Entry) WithTime(t time.Time) *Entry {
 
 // Go routine wrapper
 
+func (logger *Logger) Tracef(format string, args ...interface{}) {
+	waitGroup.Add(1)
+	go func() {
+		logger.Logger.WithTime(time.Now()).Tracef(format, args...)
+		waitGroup.Done()
+	}()
+}
 func (logger *Logger) Debugf(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
@@ -120,6 +127,13 @@ func (logger *Logger) Panicf(format string, args ...interface{}) {
 		waitGroup.Done()
 	}()
 }
+func (logger *Logger) Trace(args ...interface{}) {
+	waitGroup.Add(1)
+	go func() {
+		logger.Logger.WithTime(time.Now()).Trace(args...)
+		waitGroup.Done()
+	}()
+}
 func (logger *Logger) Debug(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
@@ -173,6 +187,13 @@ func (logger *Logger) Panic(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Panic(args...)
+		waitGroup.Done()
+	}()
+}
+func (logger *Logger) Traceln(args ...interface{}) {
+	waitGroup.Add(1)
+	go func() {
+		logger.Logger.WithTime(time.Now()).Traceln(args...)
 		waitGroup.Done()
 	}()
 }
@@ -233,6 +254,17 @@ func (logger *Logger) Panicln(args ...interface{}) {
 	}()
 }
 
+func (entry *Entry) Trace(args ...interface{}) {
+	waitGroup.Add(1)
+	go func() {
+		if entry.Time.IsZero() {
+			entry.Entry.WithTime(time.Now()).Trace(args...)
+		} else {
+			entry.Entry.Trace(args...)
+		}
+		waitGroup.Done()
+	}()
+}
 func (entry *Entry) Debug(args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
@@ -332,6 +364,17 @@ func (entry *Entry) Debugf(format string, args ...interface{}) {
 		waitGroup.Done()
 	}()
 }
+func (entry *Entry) Tracef(format string, args ...interface{}) {
+	waitGroup.Add(1)
+	go func() {
+		if entry.Time.IsZero() {
+			entry.Entry.WithTime(time.Now()).Tracef(format, args...)
+		} else {
+			entry.Entry.Tracef(format, args...)
+		}
+		waitGroup.Done()
+	}()
+}
 func (entry *Entry) Infof(format string, args ...interface{}) {
 	waitGroup.Add(1)
 	go func() {
@@ -405,6 +448,17 @@ func (entry *Entry) Panicf(format string, args ...interface{}) {
 			entry.Entry.WithTime(time.Now()).Panicf(format, args...)
 		} else {
 			entry.Entry.Panicf(format, args...)
+		}
+		waitGroup.Done()
+	}()
+}
+func (entry *Entry) Traceln(args ...interface{}) {
+	waitGroup.Add(1)
+	go func() {
+		if entry.Time.IsZero() {
+			entry.Entry.WithTime(time.Now()).Traceln(args...)
+		} else {
+			entry.Entry.Traceln(args...)
 		}
 		waitGroup.Done()
 	}()
