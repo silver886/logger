@@ -22,7 +22,7 @@ type Logger struct {
 var loggers = map[string]*Logger{}
 
 // New create a new logger.
-func New(name string, level []logrus.Level, dev bool) (logger *Logger) {
+func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger *Logger) {
 	// If Logger had been created, return nil
 	if loggers[name] != nil {
 		return
@@ -40,7 +40,7 @@ func New(name string, level []logrus.Level, dev bool) (logger *Logger) {
 		Logger: logrus.New(),
 		Path:   logFileName,
 	}
-	logger.SetLevel(logrus.TraceLevel)
+	logger.SetLevel(base)
 
 	// Enable color logging in Windows console.
 	logger.Formatter = &logrus.TextFormatter{ForceColors: true}
