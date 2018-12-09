@@ -4,6 +4,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"sync"
 
 	colorable "github.com/mattn/go-colorable"
 	"github.com/rifflock/lfshook"
@@ -14,6 +15,7 @@ import (
 // Logger add some attributes on logrus.Logger
 type Logger struct {
 	*logrus.Logger
+	wg   sync.WaitGroup
 	Path string
 }
 

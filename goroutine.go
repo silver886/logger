@@ -7,18 +7,10 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var (
-	waitGroup sync.WaitGroup
-)
-
 // Entry add some function on logrus.Entry
 type Entry struct {
 	*logrus.Entry
-}
-
-// Wait wait for all logging complete
-func Wait() {
-	waitGroup.Wait()
+	wg *sync.WaitGroup
 }
 
 // logger.Entry wrapper
@@ -37,517 +29,522 @@ func WithTime(t time.Time) *Entry {
 }
 
 func (logger *Logger) WithError(err error) *Entry {
-	return &Entry{Entry: logger.Logger.WithError(err)}
+	return &Entry{Entry: logger.Logger.WithError(err), wg: &logger.wg}
 }
 func (logger *Logger) WithField(key string, value interface{}) *Entry {
-	return &Entry{Entry: logger.Logger.WithField(key, value)}
+	return &Entry{Entry: logger.Logger.WithField(key, value), wg: &logger.wg}
 }
 func (logger *Logger) WithFields(fields logrus.Fields) *Entry {
-	return &Entry{Entry: logger.Logger.WithFields(fields)}
+	return &Entry{Entry: logger.Logger.WithFields(fields), wg: &logger.wg}
 }
 func (logger *Logger) WithTime(t time.Time) *Entry {
-	return &Entry{Entry: logger.Logger.WithTime(t)}
+	return &Entry{Entry: logger.Logger.WithTime(t), wg: &logger.wg}
 }
 
 func (entry *Entry) WithError(err error) *Entry {
-	return &Entry{Entry: entry.Entry.WithError(err)}
+	return &Entry{Entry: entry.Entry.WithError(err), wg: entry.wg}
 }
 func (entry *Entry) WithField(key string, value interface{}) *Entry {
-	return &Entry{Entry: entry.Entry.WithField(key, value)}
+	return &Entry{Entry: entry.Entry.WithField(key, value), wg: entry.wg}
 }
 func (entry *Entry) WithFields(fields logrus.Fields) *Entry {
-	return &Entry{Entry: entry.Entry.WithFields(fields)}
+	return &Entry{Entry: entry.Entry.WithFields(fields), wg: entry.wg}
 }
 func (entry *Entry) WithTime(t time.Time) *Entry {
-	return &Entry{Entry: entry.Entry.WithTime(t)}
+	return &Entry{Entry: entry.Entry.WithTime(t), wg: entry.wg}
+}
+
+// Wait wait for all logging complete
+func (logger *Logger) Wait() {
+	logger.wg.Wait()
 }
 
 // Go routine wrapper
 
 func (logger *Logger) Tracef(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Tracef(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Debugf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Debugf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Infof(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Infof(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Printf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Printf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Warnf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Warnf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Warningf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Warningf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Errorf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Errorf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Fatalf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Fatalf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Panicf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Panicf(format, args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Trace(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Trace(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Debug(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Debug(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Info(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Info(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Print(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Print(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Warn(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Warn(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Warning(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Warning(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Error(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Error(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Fatal(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Fatal(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Panic(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Panic(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Traceln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Traceln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Debugln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Debugln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Infoln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Infoln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Println(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Println(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Warnln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Warnln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Warningln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Warningln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Errorln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Errorln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Fatalln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Fatalln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 func (logger *Logger) Panicln(args ...interface{}) {
-	waitGroup.Add(1)
+	logger.wg.Add(1)
 	go func() {
 		logger.Logger.WithTime(time.Now()).Panicln(args...)
-		waitGroup.Done()
+		logger.wg.Done()
 	}()
 }
 
 func (entry *Entry) Trace(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Trace(args...)
 		} else {
 			entry.Entry.Trace(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Debug(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Debug(args...)
 		} else {
 			entry.Entry.Debug(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Print(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Print(args...)
 		} else {
 			entry.Entry.Print(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Info(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Info(args...)
 		} else {
 			entry.Entry.Info(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Warn(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Warn(args...)
 		} else {
 			entry.Entry.Warn(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Warning(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Warning(args...)
 		} else {
 			entry.Entry.Warning(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Error(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Error(args...)
 		} else {
 			entry.Entry.Error(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Fatal(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Fatal(args...)
 		} else {
 			entry.Entry.Fatal(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Panic(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Panic(args...)
 		} else {
 			entry.Entry.Panic(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Debugf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Debugf(format, args...)
 		} else {
 			entry.Entry.Debugf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Tracef(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Tracef(format, args...)
 		} else {
 			entry.Entry.Tracef(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Infof(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Infof(format, args...)
 		} else {
 			entry.Entry.Infof(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Printf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Printf(format, args...)
 		} else {
 			entry.Entry.Printf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Warnf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Warnf(format, args...)
 		} else {
 			entry.Entry.Warnf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Warningf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Warningf(format, args...)
 		} else {
 			entry.Entry.Warningf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Errorf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Errorf(format, args...)
 		} else {
 			entry.Entry.Errorf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Fatalf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Fatalf(format, args...)
 		} else {
 			entry.Entry.Fatalf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Panicf(format string, args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Panicf(format, args...)
 		} else {
 			entry.Entry.Panicf(format, args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Traceln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Traceln(args...)
 		} else {
 			entry.Entry.Traceln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Debugln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Debugln(args...)
 		} else {
 			entry.Entry.Debugln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Infoln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Infoln(args...)
 		} else {
 			entry.Entry.Infoln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Println(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Println(args...)
 		} else {
 			entry.Entry.Println(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Warnln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Warnln(args...)
 		} else {
 			entry.Entry.Warnln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Warningln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Warningln(args...)
 		} else {
 			entry.Entry.Warningln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Errorln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Errorln(args...)
 		} else {
 			entry.Entry.Errorln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Fatalln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Fatalln(args...)
 		} else {
 			entry.Entry.Fatalln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
 func (entry *Entry) Panicln(args ...interface{}) {
-	waitGroup.Add(1)
+	entry.wg.Add(1)
 	go func() {
 		if entry.Time.IsZero() {
 			entry.Entry.WithTime(time.Now()).Panicln(args...)
 		} else {
 			entry.Entry.Panicln(args...)
 		}
-		waitGroup.Done()
+		entry.wg.Done()
 	}()
 }
