@@ -3,7 +3,6 @@ package logger
 import (
 	"errors"
 	"io/ioutil"
-	"log"
 	"os"
 	"sync"
 
@@ -24,23 +23,20 @@ type Logger struct {
 var loggers = map[string]*Logger{}
 
 // New create a new logger.
-func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger *Logger) {
+func New(name string, base logrus.Level, level []logrus.Level, dev bool) (*Logger, error) {
 	// If Logger had been created, return nil.
-	if loggers[name] != nil {
-		return
+	if Has(name) {
+		return nil, errors.New("Name cannot be duplicated")
 	}
-
-	// Create log file in temp folder.
-	logFile, err := ioutil.TempFile("", name+".*.log")
-	if err != nil {
-		log.Fatal(err)
-	}
-	logFileName := logFile.Name()
 
 	// Create logger.
-	logger = &Logger{
-		Logger: logrus.New(),
-		Path:   logFileName,
+	logger := &Logger{Logger: logrus.New()}
+
+	// Create log file in temp folder.
+	if logFile, err := ioutil.TempFile("", name+".*.log"); err == nil {
+		logger.Path = logFile.Name()
+	} else {
+		return nil, errors.New("Cannot create log file")
 	}
 
 	// Enable color logging in Windows console.
@@ -53,27 +49,27 @@ func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger
 	// Store logger.
 	loggers[name] = logger
 
-	return
+	return logger, nil
 }
 
 // Get find the logger from storage.
-func Get(name string) (logger *Logger) {
-	logger = loggers[name]
-	return
+func Get(name string) *Logger {
+	return loggers[name]
 }
 
 // List shows created loggers.
-func List() (keys []string) {
+func List() []string {
+	var keys []string
 	for k := range loggers {
 		keys = append(keys, k)
 	}
-	return
+	return keys
 }
 
 // Has returns true if the logger created before.
-func Has(name string) (ok bool) {
-	_, ok = loggers[name]
-	return
+func Has(name string) bool {
+	_, ok := loggers[name]
+	return ok
 }
 
 // Config updates the config of the logger.
