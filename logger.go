@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"errors"
 	"io/ioutil"
 	"log"
 	"os"
@@ -12,18 +13,19 @@ import (
 	prefixed "github.com/x-cray/logrus-prefixed-formatter"
 )
 
-// Logger add some attributes on logrus.Logger
+// Logger add some attributes, base on logrus.Logger.
 type Logger struct {
 	*logrus.Logger
-	wg   sync.WaitGroup
-	Path string
+	wg      sync.WaitGroup
+	devInit bool
+	Path    string
 }
 
 var loggers = map[string]*Logger{}
 
 // New create a new logger.
 func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger *Logger) {
-	// If Logger had been created, return nil
+	// If Logger had been created, return nil.
 	if loggers[name] != nil {
 		return
 	}
@@ -40,11 +42,52 @@ func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger
 		Logger: logrus.New(),
 		Path:   logFileName,
 	}
-	logger.SetLevel(base)
 
 	// Enable color logging in Windows console.
 	logger.Formatter = &logrus.TextFormatter{ForceColors: true}
 	logger.SetOutput(colorable.NewColorableStdout())
+
+	// Update logger config.
+	logger.Config(base, level, dev)
+
+	// Store logger.
+	loggers[name] = logger
+
+	return
+}
+
+// Get find the logger from storage.
+func Get(name string) (logger *Logger) {
+	logger = loggers[name]
+	return
+}
+
+// List shows created loggers.
+func List() (keys []string) {
+	for k := range loggers {
+		keys = append(keys, k)
+	}
+	return
+}
+
+// Has returns true if the logger created before.
+func Has(name string) (ok bool) {
+	_, ok = loggers[name]
+	return
+}
+
+// Config updates the config of the logger.
+func (logger *Logger) Config(base logrus.Level, level []logrus.Level, dev bool) error {
+	// If Logger is nil, return an error.
+	if logger == nil {
+		return errors.New("Logger cannot be Nil")
+	}
+
+	// Set base logging level.
+	logger.SetLevel(base)
+
+	// Clear all logging levels.
+	logger.Hooks = make(logrus.LevelHooks)
 
 	// Formatter for file logging.
 	fileFormatter := &prefixed.TextFormatter{FullTimestamp: true, ForceFormatting: true, DisableColors: true, SpacePadding: 64}
@@ -53,7 +96,7 @@ func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger
 	for _, val := range level {
 		logger.Hooks.Add(lfshook.NewHook(
 			lfshook.PathMap{
-				val: logFileName,
+				val: logger.Path,
 			},
 			fileFormatter,
 		))
@@ -61,10 +104,13 @@ func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger
 
 	// Enable developing logging.
 	if dev {
-		os.RemoveAll("dev_full.log")
-		os.RemoveAll("dev_warn.log")
-		os.RemoveAll("dev_erro.log")
-		os.RemoveAll("dev_crit.log")
+		if logger.devInit == false {
+			os.RemoveAll("dev_full.log")
+			os.RemoveAll("dev_warn.log")
+			os.RemoveAll("dev_erro.log")
+			os.RemoveAll("dev_crit.log")
+			logger.devInit = true
+		}
 
 		// Full log file.
 		logger.Hooks.Add(lfshook.NewHook(
@@ -106,28 +152,5 @@ func New(name string, base logrus.Level, level []logrus.Level, dev bool) (logger
 		))
 	}
 
-	// Store logger
-	loggers[name] = logger
-
-	return
-}
-
-// Get find the logger from storage
-func Get(name string) (logger *Logger) {
-	logger = loggers[name]
-	return
-}
-
-// List shows created loggers
-func List() (keys []string) {
-	for k := range loggers {
-		keys = append(keys, k)
-	}
-	return
-}
-
-// Has returns true if the logger created before
-func Has(name string) (ok bool) {
-	_, ok = loggers[name]
-	return
+	return nil
 }
