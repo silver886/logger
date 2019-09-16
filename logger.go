@@ -91,9 +91,7 @@ func (logger *Logger) Config(base logrus.Level, level []logrus.Level, dev bool) 
 	// Add file hook.
 	for _, val := range level {
 		logger.Hooks.Add(lfshook.NewHook(
-			lfshook.PathMap{
-				val: logger.Path,
-			},
+			lfshook.PathMap{val: logger.Path},
 			fileFormatter,
 		))
 	}
